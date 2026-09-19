@@ -32,12 +32,12 @@ const Navbar = () => {
     { name: 'Home', href: '/', icon: Home },
     { name: 'Products', href: '/products', icon: Milk },
     { name: 'About Us', href: '/about', icon: Info },
-    { name: 'Gallery', href: '/#factory-gallery', icon: Camera },
+    // { name: 'Gallery', href: '/#factory-gallery', icon: Camera },
   ];
 
   return (
     <nav
-      className={`sticky top-0 z-50 w-full backdrop-blur-xl border-b transition-colors duration-300 ${
+      className={` fixed top-0 z-50 w-full backdrop-blur-xl border-b transition-colors duration-300 ${
         scrolled ? 'bg-white/90 border-gray-200 shadow-sm' : 'bg-white/35 border-transparent'
       }`}
     >
@@ -50,10 +50,10 @@ const Navbar = () => {
               transition={{ duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
-              className="relative flex-shrink-0 flex items-center group cursor-pointer"
+              className="relative shrink-0 flex items-center group cursor-pointer"
             >
               <motion.span
-                className="absolute -inset-2 rounded-full bg-orange-300/40 blur-lg -z-10"
+                className=" -inset-2 rounded-full bg-orange-300/40 blur-lg -z-10"
                 animate={{ opacity: [0.35, 0.7, 0.35] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               />
@@ -104,7 +104,7 @@ const Navbar = () => {
               <motion.span
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="group bg-slate-900 hover:bg-orange-600 text-white px-6 py-3 rounded-lg text-sm font-bold transition-all duration-300 shadow-md hover:shadow-orange-500/25 flex items-center cursor-pointer"
+                className="group bg-slate-900 hover:bg-orange-600 text-white px-6 py-3 rounded-md lg text-sm font-bold transition-all duration-300 shadow-md hover:shadow-orange-500/25 flex items-center cursor-pointer"
               >
                 B2B Inquiries
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

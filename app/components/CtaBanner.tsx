@@ -16,7 +16,7 @@ export default function CtaBanner({
 }) {
   const waHref = `https://wa.me/${SITE.whatsappNumber}`;
   return (
-    <section className="py-16 bg-gradient-to-r from-orange-600 to-amber-600 text-white">
+    <section className="py-16 bg-linear-to-r from-orange-600 to-amber-600 text-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
         <div>
           <h3 className="text-2xl sm:text-3xl font-extrabold mb-2">{title}</h3>
@@ -28,7 +28,7 @@ export default function CtaBanner({
               <motion.span
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-white text-orange-700 font-bold shadow-lg cursor-pointer"
+                className="inline-flex items-center px-6 py-3 rounded-md bg-white text-orange-700 font-bold shadow-lg cursor-pointer"
               >
                 Contact Us <ArrowRight className="ml-2 w-4 h-4" />
               </motion.span>
@@ -39,7 +39,7 @@ export default function CtaBanner({
               <motion.span
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-slate-900/30 border border-white/40 text-white font-bold cursor-pointer"
+                className="inline-flex items-center px-6 py-3 rounded-md bg-slate-900/30 border border-white/40 text-white font-bold cursor-pointer"
               >
                 <MessageCircle className="mr-2 w-4 h-4" /> WhatsApp
               </motion.span>

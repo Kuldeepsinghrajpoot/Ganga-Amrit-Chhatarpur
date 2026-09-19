@@ -159,7 +159,7 @@ export const metadata: Metadata = {
     title: "Ganga Amrit | Milk Agency & Dairy in Chhatarpur, MP",
     description:
       "Chhatarpur's own milk agency and dairy - Gold Full Cream, Double Toned, and Chai Special milk. Distributor & agency enquiries welcome.",
-    url: "https://gangaamrit.co.in",
+    url: "https://www.gangaamrit.co.in/",
     siteName: "Ganga Amrit",
     images: ["/opengraph-image.jpg"],
     locale: "en_IN",
@@ -188,14 +188,17 @@ export default function RootLayout({
         <CursorMilkTrail />
         <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-orange-100 selection:text-orange-900 scroll-smooth pb-16 md:pb-0">
           <NextTopLoader color="#EA580C" showSpinner={false} />
-          <TopAnnouncementBar />
+         
           {/* Navigation */}
           <Navbar />
-          {children}
           {/* footer */}
+          <div className="py-20">
+          {children}
+
           <Footer />
           <WhatsAppButton />
           <StickyMobileBar />
+          </div>
         </div>
      
       </body>

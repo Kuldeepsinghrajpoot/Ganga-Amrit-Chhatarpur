@@ -1,4 +1,3 @@
-import React from "react";
 
 type MilkPouchProps = {
   /** Main brand accent color for this variant, e.g. "#EA580C" */

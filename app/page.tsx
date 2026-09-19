@@ -79,7 +79,7 @@ export default function App() {
                             <source src="/video/hero-bg.webm" type="video/webm" />
                             <source src="/video/hero-bg.mp4" type="video/mp4" />
                         </video>
-                        <div className="absolute inset-0 bg-gradient-to-b from-white/45 via-orange-50/35 to-white/75" />
+                        <div className="absolute inset-0 bg-linear-to-b from-white/45 via-orange-50/35 to-white/75" />
                     </div>
 
                     <FloatingMilkDrops count={8} />
@@ -223,16 +223,17 @@ export default function App() {
                         </div>
 
                         <Reveal className="mb-14">
-                            <div className="max-w-2xl mx-auto bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+                            <div className="max-w-2xl mx-auto  rounded-sm   p-6">
                                 <MilkMachine className="w-full h-auto" />
                             </div>
+                                <div className="relative bottom-8 left-1/2 -translate-x-1/2  w-96 h-3 bg-black/30 blur-md rounded-[50%]" />
                         </Reveal>
 
                         <div className="grid md:grid-cols-3 gap-6">
                             {/* Op Card 1 */}
                             <Reveal delay={0}>
-                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-full">
-                                    <div className="w-12 h-12 bg-green-100 text-green-700 rounded-lg flex items-center justify-center mb-6">
+                                <div className=" p-6 rounded-md border border-slate-100 h-full">
+                                    <div className="w-12 h-12 bg-green-100 text-green-700 rounded-md flex items-center justify-center mb-6">
                                         <Store className="w-6 h-6" />
                                     </div>
                                     <h4 className="text-xl font-bold text-slate-900 mb-3">1. Collection</h4>
@@ -243,8 +244,8 @@ export default function App() {
                             </Reveal>
                             {/* Op Card 2 */}
                             <Reveal delay={0.12}>
-                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-full">
-                                    <div className="w-12 h-12 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center mb-6">
+                                <div className=" p-6 rounded-md border border-slate-100 h-full">
+                                    <div className="w-12 h-12 bg-blue-100 text-blue-700 rounded-md flex items-center justify-center mb-6">
                                         <ThermometerSnowflake className="w-6 h-6" />
                                     </div>
                                     <h4 className="text-xl font-bold text-slate-900 mb-3">2. Testing &amp; Chilling</h4>
@@ -255,8 +256,8 @@ export default function App() {
                             </Reveal>
                             {/* Op Card 3 */}
                             <Reveal delay={0.24}>
-                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-full">
-                                    <div className="w-12 h-12 bg-orange-100 text-orange-700 rounded-lg flex items-center justify-center mb-6">
+                                <div className=" p-6 rounded-md border border-slate-100 h-full">
+                                    <div className="w-12 h-12 bg-orange-100 text-orange-700 rounded-md flex items-center justify-center mb-6">
                                         <Cog className="w-6 h-6" />
                                     </div>
                                     <h4 className="text-xl font-bold text-slate-900 mb-3">3. Pasteurization &amp; Packing</h4>
@@ -356,9 +357,9 @@ export default function App() {
 
                         <Reveal className="grid lg:grid-cols-3 gap-6">
                             {/* Card 1: Milk Specs */}
-                            <div className="bg-orange-50/50 rounded-2xl p-8 lg:p-10 border border-orange-100 hover:border-orange-300 transition-all">
+                            <div className="bg-orange-50/50 rounded-md p-8 lg:p-10 border border-orange-100 hover:border-orange-300 transition-all">
                                 <div className="flex items-center mb-6">
-                                    <div className="w-12 h-12 bg-white text-orange-600 shadow-sm flex items-center justify-center rounded-xl mr-4">
+                                    <div className="w-12 h-12 bg-white text-orange-600 flex items-center justify-center rounded-md mr-4">
                                         <Milk className="w-6 h-6" />
                                     </div>
                                     <h4 className="text-2xl font-bold text-slate-900">Our Milk</h4>
@@ -453,7 +454,7 @@ export default function App() {
                 </div>
 
                 {/* Customer testimonials */}
-                <Testimonials />
+                {/* <Testimonials /> */}
 
                 <CtaBanner />
 
@@ -472,7 +473,7 @@ export default function App() {
 
                         <Reveal delay={0.1} className="space-y-4">
                             <div>
-                                <details className="group bg-white rounded-2xl shadow-sm border border-slate-200 open:border-orange-400 transition-all">
+                                <details className="group bg-white rounded-md border border-slate-200 open:border-orange-400 transition-all">
                                     <summary className="flex cursor-pointer items-center justify-between p-6 text-slate-900 font-bold text-lg list-none [&::-webkit-details-marker]:hidden">
                                         <span>Which milk products do you offer?</span>
                                         <ChevronDown className="w-5 h-5 text-orange-500 transition-transform group-open:rotate-180" />
@@ -482,7 +483,7 @@ export default function App() {
                                     </div>
                                 </details>
 
-                                <details className="group bg-white rounded-2xl shadow-sm border border-slate-200 open:border-orange-400 transition-all">
+                                <details className="group bg-white rounded-2xl border border-slate-200 open:border-orange-400 transition-all">
                                     <summary className="flex cursor-pointer items-center justify-between p-6 text-slate-900 font-bold text-lg list-none [&::-webkit-details-marker]:hidden">
                                         <span>Is Ganga Amrit FSSAI licensed and GST registered?</span>
                                         <ChevronDown className="w-5 h-5 text-orange-500 transition-transform group-open:rotate-180" />
@@ -492,7 +493,7 @@ export default function App() {
                                     </div>
                                 </details>
 
-                                <details className="group bg-white rounded-2xl shadow-sm border border-slate-200 open:border-orange-400 transition-all">
+                                <details className="group bg-white rounded-2xl border border-slate-200 open:border-orange-400 transition-all">
                                     <summary className="flex cursor-pointer items-center justify-between p-6 text-slate-900 font-bold text-lg list-none [&::-webkit-details-marker]:hidden">
                                         <span>How can I become a distributor or retailer?</span>
                                         <ChevronDown className="w-5 h-5 text-orange-500 transition-transform group-open:rotate-180" />

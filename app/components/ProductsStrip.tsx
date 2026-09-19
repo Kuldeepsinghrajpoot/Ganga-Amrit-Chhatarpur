@@ -33,10 +33,10 @@ export default function ProductsStrip() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
               whileHover={{ y: -8 }}
-              className="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-100 bg-white"
+              className="group relative rounded-md overflow-hidden   border border-slate-100 bg-white"
             >
               <Link href="/products">
-                <div className="aspect-[3/4] relative bg-gradient-to-b from-orange-50 to-white p-6">
+                <div className="aspect-3/4 relative bg-linear-to-b from-orange-50 to-white p-6">
                   <Image
                     src={p.image}
                     alt={p.name}
@@ -44,7 +44,7 @@ export default function ProductsStrip() {
                     sizes="(max-width: 640px) 100vw, 33vw"
                     className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-white via-white/90 to-transparent">
+                  <div className="absolute bottom-0 left-0 right-0 p-5 bg-linear-to-t from-white via-white/90 to-transparent">
                     <div className="text-xs font-bold uppercase tracking-wider text-orange-600 mb-1">{p.tag}</div>
                     <div className="text-lg font-extrabold text-slate-900 flex items-center justify-between">
                       {p.name}
