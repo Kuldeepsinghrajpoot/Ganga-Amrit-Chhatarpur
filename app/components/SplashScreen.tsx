@@ -1,93 +1,97 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Logo from "./Logo";
+import Image from "next/image";
 
+const SESSION_KEY = "ganga-amrit-splash-shown";
+
+/**
+ * A short branded splash shown once per browser session (first page load
+ * only - not on every route change) before revealing the site. Skips
+ * itself entirely if it's already played this session.
+ */
 export default function SplashScreen() {
-  const [show, setShow] = useState(false);
+  // Both the server and the very first client render must produce
+  // identical output, so this always starts as `false` here. Whether to
+  // actually show the splash (based on sessionStorage, which only exists
+  // in the browser) is decided a moment later inside useEffect, which
+  // never runs during SSR - this avoids a hydration mismatch.
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Only show on very first visit per session
-    const seen = sessionStorage.getItem("ga_splash_seen");
-    if (!seen) {
-      setShow(true);
-      sessionStorage.setItem("ga_splash_seen", "true");
-      const t = setTimeout(() => setShow(false), 2200);
-      return () => clearTimeout(t);
+    try {
+      if (!window.sessionStorage.getItem(SESSION_KEY)) {
+        // Reading sessionStorage (browser-only) can't happen during SSR, so
+        // this one-time "should we show it" check has to run after mount.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setVisible(true);
+      }
+    } catch {
+      // sessionStorage unavailable (privacy mode, etc.) - just skip the splash.
     }
   }, []);
 
+  useEffect(() => {
+    if (!visible) return;
+    const timer = setTimeout(() => {
+      setVisible(false);
+      try {
+        window.sessionStorage.setItem(SESSION_KEY, "yes");
+      } catch {}
+    }, 3600);
+    return () => clearTimeout(timer);
+  }, [visible]);
+
   return (
     <AnimatePresence>
-      {show && (
+      {visible && (
         <motion.div
-          key="splash"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-white"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-white"
         >
-          {/* Animated background */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50"
-            animate={{ opacity: [0, 1] }}
-            transition={{ duration: 0.5 }}
-          />
-
-          {/* Floating drops */}
-          {[...Array(8)].map((_, i) => (
+            initial={{ scale: 0.7, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col items-center px-6"
+          >
             <motion.div
-              key={i}
-              className="absolute rounded-full bg-blue-200/40 pointer-events-none"
-              style={{
-                width: 8 + (i % 4) * 5,
-                height: 8 + (i % 4) * 5,
-                left: `${8 + i * 11}%`,
-                bottom: 0,
-              }}
-              animate={{ y: [0, -600], opacity: [0, 0.7, 0] }}
-              transition={{ duration: 2.2, delay: i * 0.15, ease: "easeOut" }}
-            />
-          ))}
-
-          <div className="relative z-10 flex flex-col items-center">
-            {/* Logo bounce in */}
-            <motion.div
-              initial={{ scale: 0.5, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
-              <Logo className="h-32 w-auto object-contain drop-shadow-xl" />
+              <Image src="/logo-color.png" alt="Ganga Amrit" width={210} height={172} priority />
             </motion.div>
 
-            {/* Tagline fade in */}
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="mt-6 text-blue-700 font-black text-xl tracking-widest uppercase"
-            >
-              शुद्धता का वादा
-            </motion.p>
-
-            {/* Loading dots */}
+            {/* Explicit brand text, in case the logo artwork reads small -
+                this guarantees "Ganga Amrit" and "शुद्धता का वादा" are both
+                clearly, separately visible on the splash. */}
             <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="mt-2 text-center"
+            >
+              <div className="text-2xl font-extrabold text-slate-900 tracking-tight">Ganga Amrit</div>
+              <div className="text-orange-600 font-bold text-lg mt-1">शुद्धता का वादा</div>
+            </motion.div>
+
+            <motion.div
+              className="mt-6 h-1 w-40 bg-orange-100 rounded-full overflow-hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="flex gap-1.5 mt-8"
+              transition={{ delay: 0.7 }}
             >
-              {[0, 1, 2].map((i) => (
-                <motion.div
-                  key={i}
-                  className="w-2 h-2 rounded-full bg-blue-600"
-                  animate={{ scale: [1, 1.5, 1], opacity: [0.4, 1, 0.4] }}
-                  transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.2 }}
-                />
-              ))}
+              <motion.div
+                className="h-full bg-orange-600 rounded-full"
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1.9, ease: "easeInOut", delay: 0.2 }}
+              />
             </motion.div>
-          </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Loader2, Send, X } from "lucide-react";
+import ConfettiBurst from "./ConfettiBurst";
 
 const INDIAN_STATES = [
   "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa",
@@ -32,6 +33,10 @@ type ContactFormValues = {
   state: string;
   pincode: string;
   message?: string;
+  // Honeypot: a real visitor never sees or fills this field (hidden off-screen).
+  // Bots that auto-fill every input will fill it, and we silently drop the
+  // submission below instead of telling them it was rejected.
+  company_website?: string;
 };
 
 type Status = "idle" | "success" | "error";
@@ -58,6 +63,13 @@ export default function ContactForm() {
   }, [status]);
 
   const onSubmit = async (values: ContactFormValues) => {
+    // Honeypot tripped - silently pretend success without ever hitting the
+    // API or notifying the bot that anything was filtered.
+    if (values.company_website) {
+      setStatus("success");
+      reset({ inquiryType: INQUIRY_TYPES[0] });
+      return;
+    }
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -97,6 +109,20 @@ export default function ContactForm() {
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-6"
           >
+            {/* Honeypot - hidden from real visitors via CSS, invisible to
+                screen readers, but bots that auto-fill forms will still find
+                and fill it. Never remove this field's name or visibility. */}
+            <div style={{ position: "absolute", left: "-9999px", top: "-9999px" }} aria-hidden="true">
+              <label htmlFor="company_website">Leave this field empty</label>
+              <input
+                id="company_website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                {...register("company_website")}
+              />
+            </div>
+
             <div>
               <h3 className="text-2xl font-extrabold text-slate-900 mb-1">Send us an inquiry</h3>
               <p className="text-slate-500 text-sm">Fields marked * are required. We typically respond within 24 hours.</p>
@@ -104,7 +130,7 @@ export default function ContactForm() {
 
             {/* Inquiry type */}
             <div>
-              <label className={labelClass}>I'm interested in *</label>
+              <label className={labelClass}>I&apos;m interested in *</label>
               <select className={inputClass} {...register("inquiryType", { required: true })}>
                 {INQUIRY_TYPES.map((type) => (
                   <option key={type} value={type}>{type}</option>
@@ -186,7 +212,7 @@ export default function ContactForm() {
                 <label className={labelClass}>City *</label>
                 <input
                   type="text"
-                  placeholder="Kanpur"
+                  placeholder="Chhatarpur"
                   className={inputClass}
                   {...register("city", { required: "Required" })}
                 />
@@ -278,9 +304,10 @@ function StatusPanel({
   const isSuccess = type === "success";
 
   return (
-    <div className="flex flex-col items-center text-center py-10 sm:py-14">
+    <div className="relative flex flex-col items-center text-center py-10 sm:py-14">
+      {isSuccess && <ConfettiBurst />}
       <div className="relative w-24 h-24 mb-8 flex items-center justify-center">
-        {/* Pulsing rings that continuously expand and fade — the "appearing/disappearing" animation */}
+        {/* Pulsing rings that continuously expand and fade - the "appearing/disappearing" animation */}
         {[0, 1].map((i) => (
           <motion.span
             key={i}
@@ -326,7 +353,7 @@ function StatusPanel({
         {isSuccess ? "Send another inquiry" : "Try again"}
       </button>
 
-      <p className="text-xs text-slate-400 mt-6">This will automatically close in a few seconds...</p>
+      <p className="text-xs text-slate-500 mt-6">This will automatically close in a few seconds...</p>
     </div>
   );
 }

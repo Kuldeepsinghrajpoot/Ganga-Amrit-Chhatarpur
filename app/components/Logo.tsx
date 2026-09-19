@@ -1,14 +1,25 @@
 import React from "react";
 import Image from "next/image";
 
-export default function Logo({ className = "h-12 w-auto" }: { className?: string }) {
+/**
+ * Ganga Amrit brand lockup (the actual supplied logo artwork).
+ * Use variant="white" on dark backgrounds (footer, dark hero sections).
+ */
+export default function Logo({
+  className = "h-10 w-auto",
+  variant = "color",
+}: {
+  className?: string;
+  variant?: "color" | "white";
+}) {
+  const src = variant === "white" ? "/logo-white.png" : "/logo-color.png";
   return (
     <Image
-      src="/ganga-amrit-logo.jpeg"
-      alt="Ganga Amrit - शुद्धता का वादा"
-      width={160}
-      height={160}
-      className={className}
+      src={src}
+      alt="Ganga Amrit logo"
+      width={220}
+      height={180}
+      className={`${className} object-contain`}
       priority
     />
   );

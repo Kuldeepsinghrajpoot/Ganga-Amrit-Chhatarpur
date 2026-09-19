@@ -11,7 +11,7 @@ type MilkPouchProps = {
 };
 
 /**
- * A stylized stand-up milk pouch carrying the Ganga Amrit wordmark —
+ * A stylized stand-up milk pouch carrying the Ganga Amrit wordmark -
  * pure SVG so it renders crisp on every screen size and needs no image asset.
  */
 export default function MilkPouch({ color, fill, label, fat, className = "" }: MilkPouchProps) {
